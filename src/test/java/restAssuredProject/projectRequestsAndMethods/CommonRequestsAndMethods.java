@@ -1,7 +1,7 @@
 package restAssuredProject.projectRequestsAndMethods;
 
 import framework.BaseAPIRequests;
-import restAssuredProject.dto.Posts.Posts;
+import restAssuredProject.pojo.Posts.PostsPojo;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +13,7 @@ public class CommonRequestsAndMethods<T> extends BaseAPIRequests {
 
     public CommonRequestsAndMethods(T object) {
         this.object = object;
-        if (this.object instanceof Posts) {
+        if (this.object instanceof PostsPojo) {
             uriOfEntity = "uriForPosts";
         } else {
             uriOfEntity = "uriForUsers";

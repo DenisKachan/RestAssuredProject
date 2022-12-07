@@ -3,49 +3,49 @@ package restAssuredProject.tests;
 import com.github.javafaker.Faker;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import restAssuredProject.dto.Posts.Posts;
+import restAssuredProject.pojo.Posts.PostsPojo;
 import restAssuredProject.projectRequestsAndMethods.CommonRequestsAndMethods;
-import restAssuredProject.projectRequestsAndMethods.PostsMethods;
+import restAssuredProject.projectRequestsAndMethods.Posts;
 
 import java.io.FileNotFoundException;
 
 public class PostsTests {
 
-    CommonRequestsAndMethods commonRequestsAndMethods = new CommonRequestsAndMethods(new Posts());
-    PostsMethods postsMethods = new PostsMethods();
+    CommonRequestsAndMethods commonRequestsAndMethods = new CommonRequestsAndMethods(new PostsPojo());
+    Posts posts = new Posts();
     Faker faker = new Faker();
     SoftAssert softAssert = new SoftAssert();
 
     @Test
     public void getAllPostsTest() {
-        Posts[] allPosts = (Posts[]) commonRequestsAndMethods.getAllEntities(200);
-        postsMethods.checkPostsToBeSortedById(allPosts);
+        PostsPojo[] allPosts = (PostsPojo[]) commonRequestsAndMethods.getAllEntities(200);
+        posts.checkPostsToBeSortedById(allPosts);
     }
 
     @Test
     public void getCertainPostTest() throws FileNotFoundException {
-        Posts certainPost = (Posts) commonRequestsAndMethods.getEntity("99", 200);
-        Posts dataFromJsonFile = (Posts) commonRequestsAndMethods.getDataFromJsonFile("ninetyNinthPost.json");
-        postsMethods.checkUserIdToBeEqual(certainPost, dataFromJsonFile);
-        postsMethods.checkIdToBeEqual(certainPost, dataFromJsonFile);
-        postsMethods.checkBodyToBeNotEmpty(certainPost);
-        postsMethods.checkTitleToBeNotEmpty(certainPost);
+        PostsPojo certainPost = (PostsPojo) commonRequestsAndMethods.getEntity("99", 200);
+        PostsPojo dataFromJsonFile = (PostsPojo) commonRequestsAndMethods.getDataFromJsonFile("ninetyNinthPost.json");
+        posts.checkUserIdToBeEqual(certainPost, dataFromJsonFile);
+        posts.checkIdToBeEqual(certainPost, dataFromJsonFile);
+        posts.checkBodyToBeNotEmpty(certainPost);
+        posts.checkTitleToBeNotEmpty(certainPost);
         softAssert.assertAll();
     }
 
     @Test
     public void getNonexistentPostTest() {
-        Posts actualPost = (Posts) commonRequestsAndMethods.getEntity("150", 404);
-        postsMethods.checkPostToBeNotNull(actualPost);
+        PostsPojo actualPost = (PostsPojo) commonRequestsAndMethods.getEntity("150", 404);
+        posts.checkPostToBeNotNull(actualPost);
         softAssert.assertAll();
     }
 
     @Test
     public void createNewPostTest() throws FileNotFoundException {
-        Posts newPost = (Posts) commonRequestsAndMethods.getDataFromJsonFile("postForCreation.json");
+        PostsPojo newPost = (PostsPojo) commonRequestsAndMethods.getDataFromJsonFile("postForCreation.json");
         newPost.setBody(faker.business().toString());
         newPost.setTitle(faker.name().toString());
         commonRequestsAndMethods.createNewEntity(newPost, 201);
-        postsMethods.checkCreatedPostToBeEqual(newPost);
+        posts.checkCreatedPostToBeEqual(newPost);
     }
 }

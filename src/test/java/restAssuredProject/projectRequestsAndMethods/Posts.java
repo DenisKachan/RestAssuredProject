@@ -2,42 +2,42 @@ package restAssuredProject.projectRequestsAndMethods;
 
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-import restAssuredProject.dto.Posts.Posts;
+import restAssuredProject.pojo.Posts.PostsPojo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class PostsMethods {
+public class Posts {
 
     private SoftAssert softAssert = new SoftAssert();
 
-    public void checkIdToBeEqual(Posts requestPost, Posts dataFromJsonFile) {
+    public void checkIdToBeEqual(PostsPojo requestPost, PostsPojo dataFromJsonFile) {
         softAssert.assertEquals(requestPost.getId(), dataFromJsonFile.getId(), "Id numbers are different");
     }
 
-    public void checkUserIdToBeEqual(Posts requestPost, Posts dataFromJsonFile) {
+    public void checkUserIdToBeEqual(PostsPojo requestPost, PostsPojo dataFromJsonFile) {
         softAssert.assertEquals(requestPost.getUserId(), dataFromJsonFile.getUserId(),
                 "UserId numbers are different");
     }
 
-    public void checkBodyToBeNotEmpty(Posts requestPost) {
+    public void checkBodyToBeNotEmpty(PostsPojo requestPost) {
         softAssert.assertFalse(requestPost.getBody().isEmpty(), "Body is empty");
     }
 
-    public void checkPostToBeNotNull(Posts requestPost) {
+    public void checkPostToBeNotNull(PostsPojo requestPost) {
         softAssert.assertNull(requestPost.getBody(), "The body is not null");
         softAssert.assertNull(requestPost.getTitle(), "The title is not null");
     }
 
-    public void checkTitleToBeNotEmpty(Posts requestPost) {
+    public void checkTitleToBeNotEmpty(PostsPojo requestPost) {
         softAssert.assertFalse(requestPost.getTitle().isEmpty(), "Title is empty");
     }
 
-    public void checkPostsToBeSortedById(Posts[] allPosts) {
+    public void checkPostsToBeSortedById(PostsPojo[] allPosts) {
         Assert.assertEquals(allPosts[0].getId(), allPosts[1].getId() - 1);
     }
 
-    public void checkCreatedPostToBeEqual(Posts posts) {
+    public void checkCreatedPostToBeEqual(PostsPojo posts) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
         String id = Integer.toString(posts.getId());
