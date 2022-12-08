@@ -3,9 +3,6 @@ package restAssuredProject.projectRequestsAndMethods;
 import framework.BaseAPIRequests;
 import restAssuredProject.pojo.Posts.PostsPojo;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 public class CommonRequestsAndMethods<T> extends BaseAPIRequests {
 
     T object;
@@ -32,11 +29,6 @@ public class CommonRequestsAndMethods<T> extends BaseAPIRequests {
 
     public void createNewEntity(T object, int statusCode) {
         post(gson.toJson(object), configReader.getProperty(uriOfEntity), statusCode);
-    }
-
-    public T getDataFromJsonFile(String dataFileName) throws FileNotFoundException {
-        return (T) gson.fromJson(new FileReader((configReader.getProperty("directoryForTestData") + dataFileName)),
-                object.getClass());
     }
 }
 

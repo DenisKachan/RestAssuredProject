@@ -1,6 +1,7 @@
 package restAssuredProject.tests;
 
 import com.github.javafaker.Faker;
+import framework.utils.JSONReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import restAssuredProject.pojo.Posts.PostsPojo;
@@ -12,6 +13,7 @@ import java.io.FileNotFoundException;
 public class PostsTests {
 
     CommonRequestsAndMethods commonRequestsAndMethods = new CommonRequestsAndMethods(new PostsPojo());
+    JSONReader jsonReader = new JSONReader(new PostsPojo());
     Posts posts = new Posts();
     Faker faker = new Faker();
     SoftAssert softAssert = new SoftAssert();
@@ -25,7 +27,7 @@ public class PostsTests {
     @Test
     public void getCertainPostTest() throws FileNotFoundException {
         PostsPojo certainPost = (PostsPojo) commonRequestsAndMethods.getEntity("99", 200);
-        PostsPojo dataFromJsonFile = (PostsPojo) commonRequestsAndMethods.getDataFromJsonFile("ninetyNinthPost.json");
+        PostsPojo dataFromJsonFile = (PostsPojo) jsonReader.getDataFromJsonFile("ninetyNinthPost.json");
         posts.checkUserIdToBeEqual(certainPost, dataFromJsonFile);
         posts.checkIdToBeEqual(certainPost, dataFromJsonFile);
         posts.checkBodyToBeNotEmpty(certainPost);
@@ -42,7 +44,7 @@ public class PostsTests {
 
     @Test
     public void createNewPostTest() throws FileNotFoundException {
-        PostsPojo newPost = (PostsPojo) commonRequestsAndMethods.getDataFromJsonFile("postForCreation.json");
+        PostsPojo newPost = (PostsPojo) jsonReader.getDataFromJsonFile("postForCreation.json");
         newPost.setBody(faker.business().toString());
         newPost.setTitle(faker.name().toString());
         commonRequestsAndMethods.createNewEntity(newPost, 201);

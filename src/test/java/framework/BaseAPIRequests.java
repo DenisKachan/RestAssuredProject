@@ -1,6 +1,7 @@
 package framework;
 
 import com.google.gson.Gson;
+import framework.utils.PropertyReader;
 import lombok.extern.log4j.Log4j2;
 
 import static io.restassured.RestAssured.given;
@@ -8,9 +9,9 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class BaseAPIRequests {
 
-    protected PropertyReader configReader = new PropertyReader("config.properties");
-    protected String baseUrl = configReader.getProperty("baseAPIUrl");
-    protected Gson gson = new Gson();
+    public PropertyReader configReader = new PropertyReader("config.properties");
+    public String baseUrl = configReader.getProperty("baseAPIUrl");
+    public Gson gson = new Gson();
 
     protected String get(String uri, int statusCode) {
         log.info("Send get request to uri {} ",uri);

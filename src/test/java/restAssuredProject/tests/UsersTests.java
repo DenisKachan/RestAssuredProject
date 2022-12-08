@@ -1,5 +1,6 @@
 package restAssuredProject.tests;
 
+import framework.utils.JSONReader;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import restAssuredProject.pojo.Users.UsersPojo;
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 public class UsersTests {
 
     CommonRequestsAndMethods commonRequestsAndMethods = new CommonRequestsAndMethods(new UsersPojo());
+    JSONReader jsonReader = new JSONReader(new UsersPojo());
     Users users = new Users();
     SoftAssert softAssert = new SoftAssert();
 
@@ -18,7 +20,7 @@ public class UsersTests {
     public void getAllUsersTest() throws FileNotFoundException {
         UsersPojo[] allUsers = (UsersPojo[]) commonRequestsAndMethods.getAllEntities(200);
         UsersPojo theFifthUser = users.getUserByIdFromAllUsers(allUsers, 5);
-        UsersPojo dataFromJsonFile = (UsersPojo) commonRequestsAndMethods.getDataFromJsonFile("fifthUser.json");
+        UsersPojo dataFromJsonFile = (UsersPojo) jsonReader.getDataFromJsonFile("fifthUser.json");
         users.checkNameToBeEqual(theFifthUser, dataFromJsonFile);
         users.checkUsernameToBeEqual(theFifthUser, dataFromJsonFile);
         users.checkEmailToBeEqual(theFifthUser, dataFromJsonFile);
@@ -39,7 +41,7 @@ public class UsersTests {
     @Test
     public void getCertainUserTest() throws FileNotFoundException {
         UsersPojo certainUser = (UsersPojo) commonRequestsAndMethods.getEntity("5", 200);
-        UsersPojo dataFromJsonFile = (UsersPojo) commonRequestsAndMethods.getDataFromJsonFile("fifthUser.json");
+        UsersPojo dataFromJsonFile = (UsersPojo) jsonReader.getDataFromJsonFile("fifthUser.json");
         users.checkNameToBeEqual(certainUser, dataFromJsonFile);
         users.checkUsernameToBeEqual(certainUser, dataFromJsonFile);
         users.checkEmailToBeEqual(certainUser, dataFromJsonFile);
